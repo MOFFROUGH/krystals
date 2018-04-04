@@ -5,11 +5,9 @@
   "author": "MOFFROUGH <moffmu@gmail.com>",
   "private": true,
   "scripts": {
-    "postinstall": "npm install express",
     "dev": "node build/dev-server.js",
     "deploy": "git subtree push — prefix dist heroku master",
     "build": "node build/build.js",
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
   },
