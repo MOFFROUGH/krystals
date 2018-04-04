@@ -7,6 +7,7 @@
   "scripts": {
     "postinstall": "npm install express",
     "dev": "node build/dev-server.js",
+    "deploy": "git subtree push — prefix dist heroku master",
     "build": "node build/build.js",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
@@ -26,9 +27,7 @@
     "vuetify": "^0.17.4",
     "vuex": "^3.0.1",
     "vuex-persist": "^1.1.1",
-    "vuex-router-sync": "^5.0.0"
-  },
-  "devDependencies": {
+    "vuex-router-sync": "^5.0.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
