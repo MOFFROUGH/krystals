@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VuexPersist from 'vuex-persist'
 Vue.use(Vuex)
 import api from './../services/api'
+
 const vuexLocalStorage = new VuexPersist({
   key: 'vuex', // The key to store the state on in the storage provider.
   storage: window.localStorage // or window.sessionStorage or localForage
@@ -44,7 +45,7 @@ export const store = new Vuex.Store({
       state.OneVixenImages = payload
     },
     setLoading (state, payload) {
-      state.loading = payload
+      state.vixenloading = payload
     },
     setVixenLoading (state, payload) {
       state.vixenloading = payload
@@ -55,8 +56,7 @@ export const store = new Vuex.Store({
   },
   actions: {
     setImages ({commit}) {
-      // do something after creating vue instance
-      // commit('setLoading', true)
+      commit('setLoading', true)
       api.get('images')
       .then(res => {
         const Allimages = []
@@ -100,7 +100,7 @@ export const store = new Vuex.Store({
       }
     },
     setOneVixenImages ({commit, state}, id) {
-      // commit('setVixenLoading', true)
+      commit('setVixenLoading', true)
       // console.log('clicked')
       api.get('images/' + id)
       .then(res => {
@@ -162,7 +162,7 @@ export const store = new Vuex.Store({
       return getters.getImages.slice(0, 4)
     },
     getLoading: (state) => {
-      return state.loading
+      return state.vixenloading
     }
   }
 })

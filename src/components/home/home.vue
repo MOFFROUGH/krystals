@@ -7,7 +7,9 @@
           <v-card class="yellow darken-2 ma-2" height="400px">
             <v-layout row wrap>
               <v-flex xs12 sm6 offset-sm3>
-                <v-card-title class="body-1 mt-2" light>This Site might contain adult content</v-card-title>
+                <v-card-title class="body-1 mt-2" light>
+                  This Site might contain adult content
+                </v-card-title>
               </v-flex>
               <v-flex xs12 sm6 offset-sm3>
                 <v-card-text light class="body-1 mt-2">{{adultmessage}}</v-card-text>
@@ -27,109 +29,81 @@
       </v-layout>
       <v-layout row wrap class="mt-2" v-if="loading">
         <v-flex xs12 class="text-xs-center">
-          <v-progress-circular
-          indeterminate
-          :width="4"
-          :size="160"
-          fill="blue"
-          color="red">
-        </v-progress-circular>
-        <p>
-          Please wait as we fetch some data from the servers
-        </p>
-      </v-flex>
-    </v-layout>
-    <v-layout row wrap v-show="!loading">
-      <v-flex xs12>
-        <v-carousel hide-delimiters v-show="!loading" :lazy="true">
-          <v-carousel-item
-          v-for="(item,i) in images"
-          :src="item.src"
-          :key="i"
-          @click='escorts(item.id)'
-          class="responsive"
-          style="cursor: pointer">
-          <p class="text-xs-center">
-            <span class="red--text display-2">{{item.vixen}}</span><br />
-            <span class="red--text small text-xs-center">{{item.location}}</span>
+          <v-progress-circular  indeterminate  :width="4"  :size="160"  fill="blue"  color="red">
+          </v-progress-circular>
+          <p>
+            Please wait as we fetch some data from the servers
           </p>
-        </v-carousel-item>
-      </v-carousel>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap v-show="!loading">
+        <v-flex xs12>
+          <v-carousel hide-delimiters v-show="!loading" :lazy="true">
+            <v-carousel-item v-for="(item,i) in images"  :src="item.src"  :key="i"  @click='escorts(item.id)'  class="responsive"  style="cursor: pointer">
+              <p class="text-xs-center">
+                <span class="red--text display-2">{{item.vixen}}</span><br />
+                <span class="red--text small text-xs-center">{{item.location}}</span>
+              </p>
+            </v-carousel-item>
+          </v-carousel>
+        </v-flex>
+      </v-layout>
+      <v-parallax src='./static/img/images1.jpg' height="100" v-show="!loading" class="mt-1 mb-1">
+        <v-layout row wrap class="text-xs-center">
+          <v-flex class="display-2 mt-4 red--text">Focus</v-flex>
+        </v-layout>
+      </v-parallax>
+      <v-layout row wrap v-show="!loading">
+        <v-flex xs12>
+          <div class="white red--text elevation-2">
+            <v-toolbar flat dense color="primary" dark>
+              <v-toolbar-title color="accent">Quick Nav</v-toolbar-title>
+              <slot name="action" />
+            </v-toolbar>
+
+            <div class="pa-2">
+              <v-layout row wrap>
+                <v-flex xs12 sm6>
+                  <h1 class="blue--text">Quick Links</h1>
+                  <v-list>
+                    <v-list-tile avatar v-for="item in quicklinks" v-bind:key="item.id" :to="item.to">
+                      <v-list-tile-action>
+                        <v-icon color="pink">{{item.icon}}</v-icon>
+                      </v-list-tile-action>
+                      <v-list-tile-content>
+                        <v-list-tile-title v-text="item.title"></v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                </v-flex>
+                <v-flex xs12 sm6>
+                  <h1 class="blue--text">Social</h1>
+                  <h2>Share <v-icon>share</v-icon></h2>
+                  <social-sharing url="http://127.0.0.1:8080/"  title="The one site that offers all you need"  description="Get Escorts that will give you profesional touch"  quote="It must be the New York Krystals. Dedicated to service, Excellent at Delivery"  hashtags="escorts, beauty, diamonds, certified, verified, girls, hot, babe"  twitter-user="New York Krystals"  inline-template>
+                    <div>
+                      <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="facebook">
+                        Facebook
+                      </network>
+                      <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="googleplus">
+                        Google +
+                      </network>
+                      <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="twitter">
+                        Twitter
+                      </network>
+                    </div>
+                  </social-sharing>
+                  <h2>Follow us on</h2>
+                  <v-btn flat>Facebook</v-btn>
+                  <v-btn flat>Google+</v-btn>
+                  <v-btn flat>Twitter</v-btn>
+                </v-flex>
+              </v-layout>
+            </div>
+          </div>
+        </v-flex>
+      </v-layout>
     </v-flex>
   </v-layout>
-
-  <v-layout row wrap class="mt-2" v-show="!loading">
-    <v-flex xs12 class="text-xs-center">
-      <p>
-        Make it Count!!
-      </p>
-    </v-flex>
-  </v-layout>
-  <v-parallax src='./static/img/images1.jpg' height="200" v-show="!loading">
-    <v-layout row wrap class="text-xs-center">
-      <v-flex class="display-2 mt-4 red--text">Focus</v-flex>
-    </v-layout>
-  </v-parallax>
-  <v-layout row wrap v-show="!loading">
-    <v-flex xs12>
-      <div class="white red--text elevation-2">
-        <v-toolbar flat dense color="primary" dark>
-          <v-toolbar-title color="accent">Quick Nav</v-toolbar-title>
-          <slot name="action" />
-        </v-toolbar>
-
-        <div class="pa-2">
-          <v-layout row wrap>
-            <v-flex xs12 sm6>
-              <h1 class="cyan--text">Quick Links</h1>
-              <v-list>
-                <v-list-tile avatar v-for="item in quicklinks" v-bind:key="item.id" :to="item.to">
-                  <v-list-tile-action>
-                    <v-icon color="pink">{{item.icon}}</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title v-text="item.title"></v-list-tile-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </v-list>
-            </v-flex>
-            <v-flex xs12 sm6>
-              <h1 class="cyan--text">Social</h1>
-      <social-sharing url="http://127.0.0.1:8080/"
-      title="The one site that offers all you need"
-      description="Get Escorts that will give you profesional touch"
-      quote="It must be the New York Krystals. Dedicated to service, Excellent at Delivery"
-      hashtags="escorts, beauty, diamonds, certified, verified, girls, hot, babe"
-      twitter-user="New York Krystals"
-      inline-template>
-      <div>
-        <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="facebook">
-          Facebook
-        </network>
-        <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="googleplus">
-          Google +
-        </network>
-        <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="twitter">
-          Twitter
-        </network>
-      </div>
-    </social-sharing>
-  </v-flex>
-</v-layout>
-</div>
-</div>
-</v-flex>
-</v-layout>
-
-<v-parallax src='./static/img/images.jpg' height="300" v-show="!loading">
-  <v-layout row wrap class="text-xs-center">
-    <v-flex class="display-2 mt-4 blue--text xs12">Freedom</v-flex>
-    <v-flex class="small mt-4 blue--text">All Around</v-flex>
-  </v-layout>
-</v-parallax>
-
-</v-flex>
-</v-layout>
 </template>
 
 <script>
@@ -176,7 +150,7 @@ export default {
       return this.$store.state.QuickLinks
     },
     loading () {
-      return this.$store.state.loading
+      return this.$store.state.vixenloading
     },
     consent () {
       return this.$store.state.consent

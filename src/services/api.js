@@ -5,5 +5,5 @@ Vue.prototype.$axios = axios
 
 export default
 axios.create({
-  baseURL: 'http://mymathkings.com/escorts/server/vixens/'
+  baseURL: 'https://mymathkings.com/escorts/server/vixens/'
 })

@@ -1,6 +1,6 @@
 {
-  "name": "vue-escorts",
-  "short_name": "esc",
+  "name": "nyKrystals",
+  "short_name": "nyk",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "background_color": "#EA80FC",
+  "theme_color": "#AB47BC"
 }

@@ -10,87 +10,41 @@
               <v-icon>help</v-icon>
             </v-btn>
           </v-toolbar>
-
           <div class="pa-2">
             <v-layout row wrap>
               <v-flex xs12>
                 <h1 class="cyan--text text-xs-center">Fill out this form</h1>
                 <v-layout>
                   <v-flex xs12 sm8 offset-sm2>
-                    <form method="post" enctype="multipart/form-data" >
-                      <v-text-field
-                      label="Name"
-                      v-model="name"
-                      :error-messages="nameErrors"
-                      :counter="25"
-                      @input="$v.name.$touch()"
-                      @blur="$v.name.$touch()"
-                      required
-                      ></v-text-field>
-                      <v-text-field
-                      label="E-mail"
-                      v-model="email"
-                      :error-messages="emailErrors"
-                      @input="$v.email.$touch()"
-                      @blur="$v.email.$touch()"
-                      required
-                      ></v-text-field>
-                      <v-text-field
-                      label="Age"
-                      v-model="age"
-                      type ="number"
-                      :error-messages="ageErrors"
-                      @input="$v.age.$touch()"
-                      @blur="$v.age.$touch()"
-                      required
-                      ></v-text-field>
-                      <v-text-field
-                      label="Location"
-                      v-model="location"
-                      type ="text"
-                      required
-                      ></v-text-field>
-                      <v-text-field
-                      label="Interests"
-                      v-model="interests"
-                      type ="text"
-                      required
-                      ></v-text-field>
+                    <v-flex xs12 class="text-xs-center">
+                      <v-progress-circular  v-if="loading"  indeterminate  v-bind:width="3" color="blue">
+                      </v-progress-circular>
+                    </v-flex>
+                    <form method="post" enctype="multipart/form-data" v-if="!loading">
+                      <v-text-field  label="Name"  v-model="name"  :error-messages="nameErrors"  :counter="25" @input="$v.name.$touch()" @blur="$v.name.$touch()" required>
+                      </v-text-field>
+                      <v-text-field  label="E-mail"  v-model="email" :error-messages="emailErrors"@input="$v.email.$touch()"  @blur="$v.email.$touch()"  required>
+                      </v-text-field>
+                      <v-text-field  label="Age"  v-model="age"  type ="number"  :error-messages="ageErrors"  @input="$v.age.$touch()"  @blur="$v.age.$touch()"  required>
+                      </v-text-field>
+                      <v-text-field  label="Location"  v-model="location"  type ="text"  required>
+                      </v-text-field>
+                      <v-text-field  label="Interests"  v-model="interests"  type ="text"  required>
+                      </v-text-field>
                       <v-btn raised class="primary" @click="onPickFile">Upload Profile</v-btn>
-                      <input
-                      type ="file"
-                      required
-                      style="display:none"
-                      accept="image/*"
-                      ref="fileInput"
-                      @change = "onFilePicked"
-                      ></input>
+                      <input type ="file"  required  style="display:none"  accept="image/*"  ref="fileInput"  @change = "onFilePicked"/>
                       <div>
-                        <img :src="imageURL" alt="" height="150">
+                        <img :src="imageURL" alt="" height="150"/>
                       </div>
-                      <v-select
-                      label="Type"
-                      v-model="select"
-                      :items="items"
-                      :error-messages="selectErrors"
-                      @change="$v.select.$touch()"
-                      @blur="$v.select.$touch()"
-                      required
-                      ></v-select>
-                      <v-checkbox
-                      label="Agree to terms and conditions"
-                      v-model="checkbox"
-                      :error-messages="checkboxErrors"
-                      @change="$v.checkbox.$touch()"
-                      @blur="$v.checkbox.$touch()"
-                      required
-                      ></v-checkbox>
+                      <v-select  label="Type"  v-model="select"  :items="items"  :error-messages="selectErrors"  @change="$v.select.$touch()"  @blur="$v.select.$touch()"  required>
+                      </v-select>
+                      <v-checkbox  label="Agree to terms and conditions"  v-model="checkbox":error-messages="checkboxErrors"@change="$v.checkbox.$touch()"  @blur="$v.checkbox.$touch()"  required>
+                      </v-checkbox>
                       <v-btn @click="submit">submit</v-btn>
                       <v-btn @click="clear">clear</v-btn>
                     </form>
                   </v-flex>
                 </v-layout>
-
               </v-flex>
             </v-layout>
           </div>
@@ -99,6 +53,7 @@
     </v-layout>
   </v-container>
 </template>
+
 <script>
 import api from '@/services/api'
 import { validationMixin } from 'vuelidate'
@@ -149,13 +104,16 @@ export default {
       if (!this.image) {
         return
       }
+      this.$store.dispatch('setLoading', true)
       api.post('register', personal)
       .then(res => {
         // console.log(res)
         this.$store.dispatch('setImages')
+        this.$store.dispatch('setLoading', false)
         this.$router.push('/executive')
       })
       .catch(error => {
+        this.$store.dispatch('setLoading', false)
         console.log(error)
       })
     },
@@ -223,6 +181,9 @@ export default {
       !this.$v.email.email && errors.push('Must be valid e-mail')
       !this.$v.email.required && errors.push('E-mail is required')
       return errors
+    },
+    loading () {
+      return this.$store.state.loading
     }
   }
 }

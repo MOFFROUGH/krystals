@@ -2,14 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/home/home'
 import Career from '@/components/home/career'
-import Executive from '@/components/executive'
-import Escorts from '@/components/escorts'
-import EscortsOne from '@/components/escortsone'
-import ExecBooking from '@/components/executivebooking'
-import EscortBooking from '@/components/vixensbooking'
-import oneExecutive from '@/components/oneExecutive'
-import About from '@/components/about'
-import Paypal from '@/components/paypal'
+import About from '@/components/home/about'
+import Executive from '@/components/krystals/executive'
+import oneExecutive from '@/components/krystals/oneExecutive'
+import ExecBooking from '@/components/krystals/executivebooking'
+// import EscortBooking from '@/components/vixensbooking'
+// import Escorts from '@/components/escorts'
+// import EscortsOne from '@/components/escortsone'
+import Paypal from '@/components/payment/paypal'
+// admin routes
+import Addpics from '@/components/admin/addpics'
 Vue.use(Router)
 
 export default new Router({
@@ -24,17 +26,17 @@ export default new Router({
       name: 'Career',
       component: Career
     },
-    {
-      path: '/escorts',
-      name: 'Escorts',
-      component: Escorts
-    },
-    {
-      path: '/escorts/:id',
-      name: 'oneEscort',
-      component: EscortsOne,
-      props: true
-    },
+    // {
+    //   path: '/escorts',
+    //   name: 'Escorts',
+    //   component: Escorts
+    // },
+    // {
+    //   path: '/escorts/:id',
+    //   name: 'oneEscort',
+    //   component: EscortsOne,
+    //   props: true
+    // },
     {
       path: '/about',
       name: 'About',
@@ -51,12 +53,12 @@ export default new Router({
       component: oneExecutive,
       props: true
     },
-    {
-      path: '/escort/:vixenid/book/:serviceid',
-      props: true,
-      name: 'EscortBooking',
-      component: EscortBooking
-    },
+    // {
+    //   path: '/escort/:vixenid/book/:serviceid',
+    //   props: true,
+    //   name: 'EscortBooking',
+    //   component: EscortBooking
+    // },
     {
       path: '/executive/:vixenid/book/:serviceid',
       props: true,
@@ -67,6 +69,11 @@ export default new Router({
       path: '/paypal',
       name: 'Paypal',
       component: Paypal
+    },
+    {
+      path: '/admin/addpics',
+      name: 'Addpics',
+      component: Addpics
     }
   ],
   mode: 'history'
