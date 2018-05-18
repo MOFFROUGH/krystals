@@ -4,7 +4,7 @@
       <v-container fluid v-bind="{ [`grid-list-${size}`]: true }">
         <v-layout>
           <v-flex>
-            <span class="display-2">{{image.vixen}}</span>
+            <span class="display-2">{{image.vixen}}</span>            
           </v-flex>
         </v-layout>
         <v-layout>
@@ -22,9 +22,13 @@
               <v-progress-circular  indeterminate  :width="4" :size="160" fill="blue" color="red" v-show="vixenloading">
               </v-progress-circular>
               <v-carousel hide-delimiters hide-controls v-show="!vixenloading">
-                <v-carousel-item v-for="(item,i) in imagesVixen"  :key="i" @click='escorts' :src="item.src"  transition="slide-y-transition" reverseTransition="fade" style="cursor:pointer"></v-carousel-item>
+                <v-carousel-item v-for="(item,i) in imagesVixen"  :key="i" @click='escorts' :src="item.src"  transition="slide-y-transition" reverseTransition="fade"></v-carousel-item>
               </v-carousel>
+
             </v-card-media>
+            <lightbox :src="item.src" :caption="image.vixen" :album="image.vixen" v-for="(item,i) in imagesVixen"  :key="i" class="ma-1">
+              <img width="150px" height="150px" :src="item.src" style="cursor:pointer">
+            </lightbox>
           </v-flex>
           <v-flex xs12 sm6 class="mt-1 mb-1">
             <div style="border: red solid 2px" class="mb-1">
@@ -44,8 +48,9 @@
             </div>
             <div>
               <v-layout row justify-center>
+                <v-flex xs12>
                 <v-dialog v-model="dialog" persistent max-width="1200" v-show="!consent">
-                  <v-btn round block color="primary" slot="activator" ref="openDD">Book me!</v-btn>
+                  <v-btn round color="primary" slot="activator" ref="openDD">Book me!</v-btn>
                   <v-card class="purple lighten-2 ma-2" height="400px">
                     <v-layout row wrap>
                       <v-flex xs12>
@@ -56,7 +61,7 @@
                       <v-flex xs12>
                         <v-card-text light class="small mt-2">
                           <v-list class="purple lighten-3 pa-2">
-                            <v-list-tile avatar v-for="item in officialservices" :key="item.id"  :to="'/executive/'+id+'/book/'+item.id"class="accent elevation-1 ma-2 pt-1 pb-1">
+                            <v-list-tile avatar v-for="item in officialservices" :key="item.id"  :to="'/executive/'+id+'/book/'+item.id" class="accent elevation-1 ma-2 pt-1 pb-1">
                               <v-list-tile-content class="headline ">
                                 <v-list-tile-title v-text="item.budget+' ' +item.timefor"></v-list-tile-title>
                               </v-list-tile-content>
@@ -72,10 +77,11 @@
                     </v-layout>
                   </v-card>
                 </v-dialog>
+                </v-flex>
               </v-layout>
             </div>
-            <div>
-              <v-layout row justify-center>
+            <div >
+              <!-- <v-layout row justify-center>
                 <v-dialog  v-model="dialog2" persistent :overlay="false" transition="dialog-bottom-transition">
                   <v-flex xs12 sm4 offset-sm4>
                   <v-carousel hide-delimiters>
@@ -83,7 +89,8 @@
                   </v-carousel>
                   </v-flex>
                 </v-dialog>
-              </v-layout>
+              </v-layout> -->
+
             </div>
             <!-- <div style="border: red solid 2px">
               <span class="headline">Here is a list of things i can do for you</span>

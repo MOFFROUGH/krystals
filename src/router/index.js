@@ -76,5 +76,6 @@ export default new Router({
       component: Addpics
     }
   ],
-  mode: 'history'
+  mode: 'history',
+  hashbang: false
 })

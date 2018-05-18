@@ -74,11 +74,11 @@ export default {
       .then(res => {
         // console.log(res)
         this.$store.dispatch('setImages')
-        this.$store.dispatch('loading', false)
-        this.$router.push('/executive')
+        this.$store.dispatch('setLoading', false)
+        this.$router.push('/admin/addpics')
       })
       .catch(error => {
-        this.$store.dispatch('loading', false)
+        this.$store.dispatch('setLoading', false)
         console.log(error)
       })
     }

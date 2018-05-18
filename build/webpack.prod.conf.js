@@ -109,11 +109,11 @@ const webpackConfig = merge(baseWebpackConfig, {
         {
           urlPattern: /[.]jpg$/,
           handler: 'cacheFirst'
-        },
-        {
-          urlPattern: /^https\:\/\/\mymathkings\.com\/escorts\/server\/vixens\//,
-          handler: 'cacheFirst'
         }
+        // {
+        //   urlPattern: /^https\:\/\/\mymathkings\.com\/escorts\/server\/vixens\//,
+        //   handler: 'cacheFirst'
+        // }
       ]
     })
   ]

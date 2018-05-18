@@ -16,10 +16,10 @@
                   <v-card flat tile style="border: red solid 2px">
                     <v-layout row wrap>
                       <v-flex xs12 class="text-xs-center">
-                        <span class="mr-2">
+                        <!-- <span class="mr-2">
                           <i :class="image.color+'--text fa fa-'+image.icon"></i>
                           {{image.class}}
-                        </span>
+                        </span> -->
                         <span class="mr-2">
                           <i class="fa fa-fire orange--text"></i>
                           Hot

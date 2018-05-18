@@ -20,6 +20,14 @@ export const store = new Vuex.Store({
       {to: '/', id: 1, src: '/static/img/download.jpg', icon: 'home', title: 'Home'},
       {to: '/executive', id: 3, src: '/static/img/images1.jpg', icon: 'work', title: 'Escorts'}
     ],
+    // images: [
+    //   {vixen: 'cate', email: 'cate@cate.com', location: 'manhattan', type: 'blonde', src: '/static/img/images-n3.jpg', age: 23, id: 12},
+    //   {vixen: 'Angela', email: 'cate@cate.com', location: 'Bronx', type: 'Asian', src: '/static/img/images-n4.jpg', age: 23, id: 13},
+    //   {vixen: 'Maggie', email: 'cate@cate.com', location: 'Bronx', type: 'Brunette', src: '/static/img/images-n5.jpg', age: 23, id: 14},
+    //   {vixen: 'Ann', email: 'cate@cate.com', location: 'Bronx', type: 'Ebony', src: '/static/img/images-n6.jpg', age: 23, id: 15},
+    //   {vixen: 'Janet', email: 'cate@cate.com', location: 'manhattan', type: 'Blonde', src: '/static/img/images-n7.jpg', age: 23, id: 16},
+    //   {vixen: 'Jade', email: 'cate@cate.com', location: 'Bronx', type: 'blonde', src: '/static/img/images-n8.jpg', age: 23, id: 17}
+    // ],
     images: null,
     loading: false,
     vixenloading: false,
@@ -39,7 +47,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     setImages (state, payload) {
-      state.images = payload
+      state.images.push(payload)
     },
     setOneVixenImages (state, payload) {
       state.OneVixenImages = payload
@@ -59,10 +67,10 @@ export const store = new Vuex.Store({
       commit('setLoading', true)
       api.get('images')
       .then(res => {
-        const Allimages = []
+        // const Allimages = {}
         const obj = res.data.images
         for (var i = 0; i < obj.length; i++) {
-          Allimages.push({
+          let Allimages = {
             id: obj[i].id,
             src: obj[i].src,
             vixen: obj[i].name,
@@ -73,10 +81,11 @@ export const store = new Vuex.Store({
             color: 'blue',
             interests: 'clubbing and going out',
             age: parseInt(obj[i].age)
-          })
+          }
+          commit('setImages', Allimages)
         }
         // console.log(Allimages)
-        commit('setImages', Allimages)
+
         commit('setLoading', false)
         // console.log(res.data)
       })
