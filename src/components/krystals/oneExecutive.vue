@@ -27,8 +27,8 @@
 
             </v-card-media>
             <lightbox :src="item.src" :caption="image.vixen" :album="image.vixen" v-for="(item,i) in imagesVixen"  :key="i" class="ma-1">
-              <img width="150px" height="150px" :src="item.src" style="cursor:pointer">
-            </lightbox>
+              <img width="50px" height="50px" :src="item.src" style="cursor:pointer">
+            </lightbox>            
           </v-flex>
           <v-flex xs12 sm6 class="mt-1 mb-1">
             <div style="border: red solid 2px" class="mb-1">

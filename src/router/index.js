@@ -4,8 +4,10 @@ import Home from '@/components/home/home'
 import Career from '@/components/home/career'
 import About from '@/components/home/about'
 import Executive from '@/components/krystals/executive'
+import Party from '@/components/krystals/party'
 import oneExecutive from '@/components/krystals/oneExecutive'
 import ExecBooking from '@/components/krystals/executivebooking'
+import PartyBooking from '@/components/krystals/partybooking'
 // import EscortBooking from '@/components/vixensbooking'
 // import Escorts from '@/components/escorts'
 // import EscortsOne from '@/components/escortsone'
@@ -48,6 +50,17 @@ export default new Router({
       component: Executive
     },
     {
+      path: '/executive/partybooking',
+      name: 'partybooking',
+      component: PartyBooking
+    },
+    {
+      path: '/executive/party/:id',
+      name: 'party',
+      component: Party,
+      props: true
+    },
+    {
       path: '/executive/:id',
       name: 'oneExecutive',
       component: oneExecutive,
@@ -74,6 +87,11 @@ export default new Router({
       path: '/admin/addpics',
       name: 'Addpics',
       component: Addpics
+    },
+    {
+      path: '*',
+      name: 'default',
+      component: Executive
     }
   ],
   mode: 'history',

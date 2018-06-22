@@ -5,7 +5,7 @@
     <v-container fluid v-show="!loading">
       <v-navigation-drawer  fixed  :mini-variant="miniVariant"  :clipped="clipped"  v-model="drawer"  app  temporary  v-show="!loading">
         <v-toolbar color="secondary">
-          <v-toolbar-title>New York Krystals</v-toolbar-title>
+          <v-toolbar-title>JipeRaha </v-toolbar-title>
         </v-toolbar>
         <v-list>
           <v-list-tile  value="true"  v-for="(item, i) in Menuitems"  :key="i"  exact  :to="item.to" >
@@ -31,21 +31,19 @@
       </v-toolbar>
       <v-content>
         <main class="mt-2">
-          <v-layout>
             <v-layout>
               <v-flex  class="mb-2 mt-2 xs12">
                 <v-toolbar color="accent" dark v-show="!loading">
-                  <v-toolbar-title class="hidden-xs-only">New York Krystals</v-toolbar-title>
+                  <v-toolbar-title class="hidden-xs-only">JipeRaha </v-toolbar-title>
                   <v-spacer class="hidden-xs-only"></v-spacer>
                   <div class="title" v-if="!visibleRoutes">
-                    The most personalised experience in the entire NY city
+                    The most personalised experience in the entire city
                   </div>
                   <v-text-field  prepend-icon="search" style="min-width= 350"placeholder="Search" hide-details single-line v-model="search" v-if="visibleRoutes">
                   </v-text-field>
                 </v-toolbar>
               </v-flex>
             </v-layout>
-          </v-layout>
           <router-view>
           </router-view>
         </main>
@@ -77,7 +75,7 @@ export default {
       fixed: false,
       miniVariant: false,
       search: '',
-      title: 'New York Krystals',
+      title: 'JipeRaha ',
       Menuitems: [
         {id: 1, icon: 'group_add', name: 'Career', to: '/career'},
         {id: 3, icon: 'work', name: 'Escorts', to: '/executive'},
@@ -94,6 +92,10 @@ export default {
   methods: {
     homer () {
       this.$router.push('/')
+    },
+    deleteStore () {
+      //
+      window.localStorage.removeItem('vuex')
     }
   },
   computed: {
@@ -110,9 +112,11 @@ export default {
     }
   },
   mounted () {
+    window.localStorage.removeItem('vuex')
     // do something after creating vue instance
     this.$store.dispatch('setImages')
     this.$store.dispatch('setConsent')
+    setTimeout(this.deleteStore, 120000)
   },
   watch: {
     search: _.debounce(function (value) {

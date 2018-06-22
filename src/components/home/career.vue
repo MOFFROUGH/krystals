@@ -4,7 +4,7 @@
       <v-flex xs12>
         <div class="white red--text elevation-2">
           <v-toolbar flat dense class="accent" dark>
-            <v-toolbar-title>Get yourself started at vixens.io</v-toolbar-title>
+            <v-toolbar-title>Get yourself started at JipeRaha</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn light flat icon  to='/about#career'>
               <v-icon>help</v-icon>

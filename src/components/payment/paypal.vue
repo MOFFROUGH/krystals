@@ -8,83 +8,104 @@
           <div>
             <h3 class="headline mb-0">{{image.vixen}}</h3>
             <div>{{image.location}}</div>
-            <span class="mr-2">
-              <i :class="image.color+'--text fa fa-'+image.icon"></i>
-              {{image.class}}
-            </span>
-            <span class="mr-2">
-              <i class="fa fa-fire orange--text"></i>
-              Hot
-            </span>
-            <span class="mr-2">
-              <v-icon light class="green--text">verified_user</v-icon>
-              Verified
-            </span>
-          </div>
+            <!-- <span class="mr-2">
+            <i :class="image.color+'--text fa fa-'+image.icon"></i>
+            {{image.class}}
+          </span> -->
+          <span>
+            {{offer.budget}}
+          </span> <br />
+          <span class="mr-2">
+            <!-- <i class="fa fa-fire orange--text"></i> -->
+            Hot
+          </span>
+          <span class="mr-2">
+            <v-icon light class="green--text">verified_user</v-icon>
+            Verified
+          </span>
+        </div>
+      </v-card-title>
+      <!-- <v-list class="purple lighten-3">
+      <v-list-tile avatar class="blue elevation-1 ma-2">
+      <v-list-tile-content>
+      <v-list-tile-title v-text="image.vixen">
+    </v-list-tile-title>
+    <v-list-tile-title v-text="image.location">
+  </v-list-tile-title>
+</v-list-tile-content>
+</v-list-tile>
+</v-list> -->
+</v-card>
+</v-flex>
+<div v-show="message">
+  <v-snackbar :timeout="6000"  :color="syscolor"  v-model="snackbar"  class="" >
+    {{ message }}
+    <v-btn dark flat @click.native="snackbar = false">X</v-btn>
+  </v-snackbar>
+</div>
+<v-flex xs12 md6>
+  <v-card class="ml-2 mt-2">
+    <!-- <v-card-media src="/static/img/fg.png" height="200px" class="hidden-xs-only">
+  </v-card-media> -->
+  <v-card-title primary-title>
+  </v-card-title>
+  <v-list class=" lighten-3">
+    <v-dialog v-model="dialog" persistent max-width="500px">
+      <v-btn  color="success" dark slot="activator">Finish</v-btn>
+      <v-card>
+        <v-card-title>
+          <span class="display-1">Payment Procedure</span>
         </v-card-title>
-        <v-list class="purple lighten-3">
-          <v-list-tile avatar class="blue elevation-1 ma-2">
-            <v-list-tile-content>
-              <v-list-tile-title v-text="image.vixen">
-              </v-list-tile-title>
-              <v-list-tile-title v-text="image.location">
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-card>
-    </v-flex>
-    <div v-show="message">
-      <v-snackbar :timeout="6000"  :color="syscolor"  v-model="snackbar"  class="" >
-        {{ message }}
-        <v-btn dark flat @click.native="snackbar = false">X</v-btn>
-      </v-snackbar>
-    </div>
-    <v-flex xs12 md6>
-      <v-card class="ml-2 mt-2">
-        <v-card-media src="/static/img/fg.png" height="200px" class="hidden-xs-only">
-        </v-card-media>
-        <v-card-title primary-title>
-        </v-card-title>
-        <v-list class="purple lighten-3">
-          <v-list-tile avatar class="blue elevation-1 ma-2">
-            <v-list-tile-content>
-              <v-list-tile-title v-text="offer.budget">
-              </v-list-tile-title>
-              <v-list-tile-title v-text="offer.timefor">
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar class="blue elevation-1 ma-2">
-            <v-list-tile-content>
-              <v-list-tile-title v-text="offer.duration">
-              </v-list-tile-title>
-              <v-list-tile-title>
-                from: {{date}}
-              </v-list-tile-title>
-              <v-list-tile-title>
-                to: {{enddate}}
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
+        <v-card-text>
+          <h1>Paybill Number: 887667</h1>
+          <p>
+            Steps to follow:
+            <p>
+              1. Go to mpesa, lipa na mpesa, Paybill
+              <br />
+              2. Enter the business number 887667
+              <br />
+              3. Enter account number as your name
+              <br />
+              4. Enter amount {{offer.budget}}.
+              <br />
+              5. Complete Transaction
+            </p>
+            <p>
+              <v-form>
+                <v-text-field  label="Enter Mpesa Confirmation Code "  v-model="mpesa"  type ="text"  required>
+C                </v-text-field>
+              </v-form>
+            </p>
+          </p>
+        </v-card-text>
         <v-card-actions>
-          <div class="text-xs-center">
-            <PayPal  :amount="offer.payment"  currency="USD"  :client="paypal"  env="production"  :buttonStyle="myStyle"  v-on:paypal-paymentAuthorized="logAuthPayment"  v-on:paypal-paymentCompleted="logCompletePayment"  v-on:paypal-paymentCancelled="logCancelPayment">
-            </PayPal>
-          </div>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="Book">All Good</v-btn>
         </v-card-actions>
       </v-card>
-    </v-flex>
-  </v-layout>
+    </v-dialog>
+  </v-list>
+  <v-card-actions>
+    <div class="text-xs-center">
+      <!-- <PayPal  :amount="offer.payment"  currency="USD"  :client="paypal"  env="production"  :buttonStyle="myStyle"  v-on:paypal-paymentAuthorized="logAuthPayment"  v-on:paypal-paymentCompleted="logCompletePayment"  v-on:paypal-paymentCancelled="logCancelPayment">
+    </PayPal> -->
+  </div>
+</v-card-actions>
+</v-card>
+</v-flex>
+</v-layout>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      mpesa: '',
       vixenid: null,
       serviceid: null,
+      dialog: false,
       user: null,
       date: null,
       enddate: null,
@@ -94,15 +115,12 @@ export default {
       message: '',
       syscolor: 'red',
       days: null,
-      paypal: {
-        sandbox: 'AQK3kcteHi9Z_PXFK1Jb4-13ZJrKXvUiZCORy-InNhFAQ4Pu6C8HdINKzOJxE0-3WElL0xQeqZnNcZ7t',
-        production: 'AS8A-FEnFVhYly4xylHF8QJgXAG9KKF-070w3hlLIesRUrpNaVKZpwdyM5amt3rxs6FTReSsH3hVgZPS'
-      },
-      myStyle: {
-        label: 'checkout',
-        size: 'large',
-        shape: 'rect',
-        color: 'gold'
+      personal: {
+        email: '',
+        firstname: '',
+        lastname: '',
+        age: '',
+        phone: ''
       }
     }
   },

@@ -8,7 +8,7 @@
               <v-card-media  :src="src"  height="400px"  class="mb-4" >
               </v-card-media>
             </v-flex>
-            <v-flex sm4 xs12>
+            <!-- <v-flex sm4 xs12>
               <span class="headline red--text">
                 {{image.vixen}}
               </span>
@@ -19,15 +19,15 @@
               </span>
               <v-card-media  :src="src"  height="400px"  class="mb-4">
               </v-card-media>
-            </v-flex>
+            </v-flex> -->
             <v-flex sm5 offset-sm2 xs12>
-              <h2>I am available for the following days</h2>
-              <div>
+              <!-- <h2>I am available for the following days</h2> -->
+              <!-- <div>
                 <v-alert :color="color" class=" hidden-xs-only"icon="info" dismissible v-model="alert">
                   {{message}}
                 </v-alert>
               </div>
-              <v-date-picker color="green lighten-1" header-color="primary" v-model="date"></v-date-picker>
+              <v-date-picker color="green lighten-1" header-color="primary" v-model="date"></v-date-picker> -->
               <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent max-width="500px">
                   <v-btn color="success" dark slot="activator">Proceed</v-btn>
@@ -44,21 +44,30 @@
                           <v-flex xs12 sm6 md6>
                             <v-text-field label="Legal last name" required v-model="personal.lastname"></v-text-field>
                           </v-flex>
-                          <v-flex xs12>
+                          <v-text-field  label="E-mail"  v-model="email" :error-messages="emailErrors" @input="$v.email.$touch()"  @blur="$v.email.$touch()"  required>
+                          </v-text-field>
+                          <v-flex xs12 sm6 md6>
+                            <v-text-field label="Phone number" required v-model="personal.phone"></v-text-field>
+                          </v-flex>
+                          <!-- <v-flex xs12 sm6 md6>
+                            <v-text-field label="Email" required v-model="personal.email"></v-text-field>
+                          </v-flex> -->
+                          <v-flex xs12 sm6>
+                            <v-select  label="Age"  required  :items="['18-29', '30-54', '54+']"  v-model="personal.age"></v-select>
+                          </v-flex>
+                          <!-- <v-flex xs12 sm6 md6>
                             <v-radio-group v-model="contmode">
                               <v-radio label="Contact me via email" value="email"></v-radio>
                               <v-radio label="Contact me via mobile" value="phone"></v-radio>
                             </v-radio-group>
-                          </v-flex>
-                          <v-flex xs12 v-if="contmode ==='email'">
+                          </v-flex> -->
+                          <!-- <v-flex xs12 v-if="contmode ==='email'">
                             <v-text-field type="email" label="Email" required v-model="personal.email"></v-text-field>
                           </v-flex>
                           <v-flex xs12 v-if="contmode ==='phone'">
                             <v-text-field  label="Phone" required v-model="personal.phone"></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm6>
-                            <v-select  label="Age"  required  :items="['18-29', '30-54', '54+']"  v-model="personal.age"></v-select>
-                          </v-flex>
+                          </v-flex> -->
+
                         </v-layout>
                       </v-container>
                       <small>
@@ -90,19 +99,28 @@
   </div>
 </template>
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, maxLength, email, between } from 'vuelidate/lib/validators'
 export default {
   props: ['vixenid', 'serviceid'],
+  mixins: [validationMixin],
+  validations: {
+    name: { required, maxLength: maxLength(25) },
+    age: { required, between: between(20, 1000) },
+    email: { required, email },
+    select: { required },
+    checkbox: { required }
+  },
   data: () => ({
     date: null,
-    allowedDates: ['18-2-2018'],
-    randomDays: [],
+    email: '',
     message: null,
     snackbar: false,
     color: 'red',
     timeout: 6000,
     alert: false,
     dialog: false,
-    contmode: 'email',
+    contmode: 'phone',
     personal: {
       email: '',
       firstname: '',
@@ -135,16 +153,17 @@ export default {
     },
     offer () {
       return this.$store.getters.getExecService(this.serviceid)
+    },
+    emailErrors () {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('E-mail is required')
+      return errors
     }
   },
   watch: {
-    date (value) {
-      console.log('new date set at', this.date)
-      this.message = 'Good Choice, Mark the date'
-      this.snackbar = true
-      this.alert = true
-      this.color = 'success'
-    }
+    //
   }
 }
 </script>
