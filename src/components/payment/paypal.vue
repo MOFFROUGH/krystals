@@ -58,7 +58,7 @@
         </v-card-title>
         <v-card-text>
           <h1>Paybill Number: 887667</h1>
-          <p>
+          <div>
             Steps to follow:
             <p>
               1. Go to mpesa, lipa na mpesa, Paybill
@@ -77,7 +77,7 @@
 C                </v-text-field>
               </v-form>
             </p>
-          </p>
+          </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -108,7 +108,6 @@ export default {
       dialog: false,
       user: null,
       date: null,
-      enddate: null,
       amount: null,
       returndata: null,
       snackbar: false,

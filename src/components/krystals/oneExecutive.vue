@@ -118,7 +118,6 @@ module.exports = {
     return {
       dialog: false,
       dialog2: false,
-      image: null,
       size: 'md'
     }
   },
@@ -136,10 +135,12 @@ module.exports = {
     },
     vixenloading () {
       return this.$store.state.vixenloading
+    },
+    image () {
+      return this.$store.getters.getOne(this.id)
     }
   },
   created () {
-    this.image = this.$store.getters.getOne(this.id)
     this.$store.dispatch('setOneVixenImages', this.id)
   }
 }

@@ -39,7 +39,7 @@
                   <div class="title" v-if="!visibleRoutes">
                     The most personalised experience in the entire city
                   </div>
-                  <v-text-field  prepend-icon="search" style="min-width= 350"placeholder="Search" hide-details single-line v-model="search" v-if="visibleRoutes">
+                  <v-text-field  prepend-icon="search" style="min-width= 350" placeholder="Search" hide-details single-line v-model="search" v-if="visibleRoutes">
                   </v-text-field>
                 </v-toolbar>
               </v-flex>

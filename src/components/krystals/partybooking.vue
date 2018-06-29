@@ -11,17 +11,7 @@
               </div>
             </v-flex>
             <v-flex xs12>
-              <v-card-actions class="body-1 mt-2">
-                <!-- <v-dialog v-model="dialog" persistent max-width="1200" v-show="!consent">
-                  <v-btn round color="primary" slot="activator" ref="openDD">Checkout</v-btn>
-                  <v-card>
-                    <p class="headline">
-                      Amount: {{parseInt(this.$store.getters.getPartyVixens.length) * 800}}
-                    </p>
-                  </v-card>
-                  <v-btn round color="primary"  @click="dialog=!dialog">Back</v-btn>
-                  <v-btn round color="primary"  @click="dialog=!dialog">Checkout</v-btn>
-                </v-dialog> -->
+              <v-card-actions class="body-1 mt-2">                
                 <v-btn  color="blue" @click="roter">Add more Girls</v-btn>
                 <v-dialog v-model="dialog" persistent max-width="500px">
 
@@ -33,9 +23,9 @@
                     </v-card-title>
                     <v-card-text>
                       <h1>Paybill Number: 887667</h1>
-                      <p>
+                      <div>
                         Steps to follow:
-                        <p>
+                        <div>
                           1. Go to mpesa, lipa na mpesa, Paybill
                           <br />
                           2. Enter the business number 887667
@@ -45,13 +35,13 @@
                           4. Enter amount Ksh. {{parseInt(this.$store.getters.getPartyVixens.length) * 800}} /=.
                           <br />
                           5. Complete Transaction
-                        </p>
-                        <p>
+                        </div>
+                        <div>
                           <v-form>
                             <v-text-field  label="Enter Mpesa Confirmation Code "  v-model="mpesa"  type ="text"  required></v-text-field>
                           </v-form>
-                        </p>
-                      </p>
+                        </div>
+                      </div>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -66,6 +56,7 @@
                 <v-list class="purple lighten-3 pa-2">
                   <v-list-tile avatar v-for="item in partyVixens" :key="item.id"  class="accent elevation-1 ma-2 pt-1 pb-1">
                     <!-- <v-avatar></v-avatar> -->
+                    <v-card-media>
                       <img width="50px" height="50px" :src="item.src" >
                     </v-card-media>
                     <v-list-tile-content class="headline ">

@@ -172,16 +172,19 @@ export const store = new Vuex.Store({
       return state.partyVixens
     },
     getOne: (state) =>
-    (imageid, cardid) => {
+    (imageid) => {
+      state.loading = true
       var image = state.images.find(function (obj) {
         return obj.id === parseInt(imageid)
       })
+      state.loading = false
       return image
     },
     getVixen: (state) => (id) => {
       var vixen = state.images.find(function (obj) {
         return obj.id === parseInt(id)
       })
+      state.loading = false
       return vixen
     },
     getOfficialServices: (state) => {
@@ -191,15 +194,19 @@ export const store = new Vuex.Store({
       return state.casualservices
     },
     getExecService: (state) => (id) => {
+      state.loading = true
       var vixen = state.officialservices.find(function (obj) {
         return obj.id === parseInt(id)
       })
+      state.loading = false
       return vixen
     },
     getCasService: (state) => (id) => {
+      state.loading = true
       var vixen = state.casualservices.find(function (obj) {
         return obj.id === parseInt(id)
       })
+      state.loading = false
       return vixen
     },
     getFeaturedVixens: (state, getters) => {
