@@ -11,18 +11,10 @@
                   <div class="title" v-if="!visibleRoutes">
                     <!-- The most personalised experience in the entire city -->
                   </div>
-                  <v-btn to="/executive/partybooking">Book {{this.$store.getters.getPartyVixens.length}}</v-btn>
+                  <v-btn round block color="orange" to="/executive/partybooking">Book {{this.$store.getters.getPartyVixens.length}}</v-btn>
                 </v-toolbar>
               </v-flex>
             </v-layout>
-            <!-- <v-layout row wrap>
-              <v-flex>
-                Book
-                <div>
-                  {{this.$store.getters.getPartyVixens.length}}
-                </div>
-              </v-flex>
-            </v-layout> -->
           </div>
           <div>
             <v-container fluid v-bind="{ [`grid-list-${size}`]: true }">
@@ -48,7 +40,7 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn round large block  color="red" dark @click="addPartyVixens(image.id)">Add me to party</v-btn>
+                      <v-btn round small block  color="red" dark @click="addPartyVixens(image.id)">Add me to party</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>

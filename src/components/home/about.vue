@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout column wrap>
+    <v-layout align-center justify-center row fill-height>
       <v-flex xs12 style="background-color: accent darken-2" class="ma-1">
         <v-card class="">
           <div class="mt-2 elevation-3">

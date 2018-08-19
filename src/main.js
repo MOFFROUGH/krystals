@@ -7,14 +7,14 @@ import App from './App'
 import router from './router'
 import lodash from 'lodash'
 import VueLodash from 'vue-lodash'
-import PayPal from 'vue-paypal-checkout'
+// import PayPal from 'vue-paypal-checkout'
 import VueLightbox from 'vue-lightbox'
 
 import('vuetify/dist/vuetify.min.css')
 var SocialSharing = require('vue-social-sharing')
 import Lightbox from 'vue-easy-lightbox'
 Vue.use(Lightbox)
-Vue.component('Paypal', PayPal)
+// Vue.component('Paypal', PayPal)
 Vue.component('Lightbox', VueLightbox)
 
 Vue.use(VueLodash, lodash)

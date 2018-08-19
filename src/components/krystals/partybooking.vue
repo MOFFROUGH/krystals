@@ -11,11 +11,11 @@
               </div>
             </v-flex>
             <v-flex xs12>
-              <v-card-actions class="body-1 mt-2">                
-                <v-btn  color="blue" @click="roter">Add more Girls</v-btn>
-                <v-dialog v-model="dialog" persistent max-width="500px">
+              <v-card-actions class="body-1 mt-2">
+                <v-btn  round small color="orange" @click="roter">Add more Girls</v-btn>
+                <v-dialog v-model="dialog" persistent width="500px">
 
-                  <v-btn  color="success" dark slot="activator">Finish</v-btn>
+                  <v-btn  round block color="success" dark slot="activator">Finish</v-btn>
 
                   <v-card>
                     <v-card-title>
@@ -55,17 +55,21 @@
               <v-card-text light class="small mt-2">
                 <v-list class="purple lighten-3 pa-2">
                   <v-list-tile avatar v-for="item in partyVixens" :key="item.id"  class="accent elevation-1 ma-2 pt-1 pb-1">
-                    <!-- <v-avatar></v-avatar> -->
-                    <v-card-media>
-                      <img width="50px" height="50px" :src="item.src" >
-                    </v-card-media>
-                    <v-list-tile-content class="headline ">
-                      <v-list-tile-title>
-                        {{item.vixen }} - {{item.type}}
-                        <!-- <v-spacer></v-spacer> -->
-                        <v-icon style="cursor:pointer; color: red" @click="removeFromParty(item.id)">clear</v-icon>
-                      </v-list-tile-title>
-                    </v-list-tile-content>
+                      <v-layout>
+                        <v-flex xs3 >
+                          <img style="cursor:pointer; color: red" class="image" height="50px" :src="item.src" @click="showImage(item.id)" >
+                          <v-dialog v-model="item.imageShow">
+                            <img class="image"  :src="item.src" height="500px">
+                            <v-btn@click="close(item.id)">Close</v-btn>
+                          </v-dialog>
+                        </v-flex>
+                      </v-layout>
+                    <v-list-tile-title>
+                      {{item.vixen }}
+                    </v-list-tile-title>
+                    <v-list-tile-title>
+                      <v-icon style="cursor:pointer; color: red" @click="removeFromParty(item.id)">clear</v-icon>
+                    </v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-card-text>
@@ -94,6 +98,12 @@ export default {
     },
     removeFromParty (id) {
       console.log('Remove from cart ' + id)
+    },
+    showImage (id) {
+      this.$store.getters.showImage(id)
+    },
+    close (id) {
+      this.$store.getters.hideImage(id)
     }
   },
   computed: {

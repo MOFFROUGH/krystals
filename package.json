@@ -1,7 +1,7 @@
 {
-  "name": "nykrystals",
+  "name": "JipeRaha.com",
   "version": "1.0.2",
-  "description": "new York krystals is the next big thing",
+  "description": "Kenyas best escort services",
   "author": "MOFFROUGH <moffmu@gmail.com>",
   "private": true,
   "scripts": {
@@ -69,7 +69,7 @@
     "stylus-loader": "^3.0.1",
     "sw-precache-webpack-plugin": "^0.11.4",
     "uglify-es": "^3.0.25",
-    "url-loader": "^0.5.8",
+    "url-loader": "^1.0.1",
     "vue-loader": "^12.1.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.3",

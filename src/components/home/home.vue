@@ -78,7 +78,10 @@
                 </v-flex>
                 <v-flex xs12 sm6>
                   <h1 class="blue--text">Social</h1>
-                  <h2>Share <v-icon>share</v-icon></h2>
+                  <h2>
+                    Share
+                    <v-icon>share</v-icon>
+                  </h2>
                   <social-sharing url="https://jiperaha.com"  title="The one site that offers all you need"  description="Get Escorts that will give you profesional touch"  quote="It must be  JipeRaha . Dedicated to service, Excellent at Delivery"  hashtags="escorts, beauty, diamonds, certified, verified, girls, hot, babe"  twitter-user="JipeRaha "  inline-template>
                     <div>
                       <network style="cursor:pointer" class="pa-2 mt-2 mr-2 title btn green lighten-4" network="facebook">
@@ -129,6 +132,7 @@ export default {
     },
     agree () {
       this.dialog = false
+      this.$store.dispatch('setConsent', true)
       window.localStorage.setItem('consent', 'true')
     },
     disagree () {
@@ -159,7 +163,7 @@ export default {
   created () {
     // do something after creating vue instance
     this.$store.dispatch('setImages')
-    if (!window.localStorage.getItem('consent')) {
+    if (!this.$store.state.consent) {
       // this.$refs.openDD.click()
       this.dialog = true
     } else {

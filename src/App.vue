@@ -1,7 +1,8 @@
 <template>
   <v-app light>
     <v-progress-linear v-bind:indeterminate="true" height="1" v-show="loading"></v-progress-linear>
-    <v-progress-circular indeterminate :size="70" :width="7" color="purple" v-show="loading"></v-progress-circular>
+    <v-progress-circular indeterminate :size="70" :width="7" color="purple"v-show="loading">
+    </v-progress-circular>
     <v-container fluid v-show="!loading">
       <v-navigation-drawer  fixed  :mini-variant="miniVariant"  :clipped="clipped"  v-model="drawer"  app  temporary  v-show="!loading">
         <v-toolbar color="secondary">
@@ -22,45 +23,46 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer" light class="hidden-sm-and-up">
         </v-toolbar-side-icon>
         <v-toolbar-title  class="display-2"  @click="homer"  style="cursor: pointer">
+          <img src="../static/img/logo.png" height="50" width="50"/>
           {{title}}
         </v-toolbar-title>
         <v-spacer class="hidden-xs-only "></v-spacer>
-        <v-btn v-for="menuitem in Menuitems" :key="menuitem.id" flat light :to="menuitem.to" class="hidden-xs-only">
+        <v-btn v-for="menuitem in Menuitems" :key="menuitem.id" flat dark :to="menuitem.to" class="hidden-xs-only">
+          <v-icon left>{{menuitem.icon}}</v-icon>
           {{menuitem.name}}
         </v-btn>
       </v-toolbar>
       <v-content>
-        <main class="mt-2">
-            <v-layout>
-              <v-flex  class="mb-2 mt-2 xs12">
-                <v-toolbar color="accent" dark v-show="!loading">
-                  <v-toolbar-title class="hidden-xs-only">JipeRaha </v-toolbar-title>
-                  <v-spacer class="hidden-xs-only"></v-spacer>
-                  <div class="title" v-if="!visibleRoutes">
-                    The most personalised experience in the entire city
-                  </div>
-                  <v-text-field  prepend-icon="search" style="min-width= 350" placeholder="Search" hide-details single-line v-model="search" v-if="visibleRoutes">
-                  </v-text-field>
-                </v-toolbar>
-              </v-flex>
-            </v-layout>
+        <main class="mt-1 main">
+          <v-layout>
+            <v-flex  class="mb-2 mt-1 xs12">
+              <v-toolbar color="pink lighten-4" dark v-show="!loading">
+                <v-toolbar-title class="hidden-xs-only">A Good life is MADE </v-toolbar-title>
+                <v-spacer class="hidden-xs-only"></v-spacer>
+                <div class="title" v-if="!visibleRoutes">
+                  The Best Experience
+                </div>
+                <v-text-field  prepend-icon="search" style="min-width= 350" placeholder="Search" hide-details single-line v-model="search" v-if="visibleRoutes">
+                </v-text-field>
+              </v-toolbar>
+            </v-flex>
+          </v-layout>
           <router-view>
           </router-view>
         </main>
       </v-content>
-      <v-layout row wrap>
+      <v-layout align-center justify-center row  wrap>
         <v-flex xs12>
           <v-footer :fixed="fixed" app>
-            <v-btn flat to="">Terms and Conditions</v-btn>
+            <!-- <v-btn class="hidden-xs-only" flat to="">Terms and Conditions</v-btn> -->
             <v-spacer></v-spacer>
             <span>&copy; {{new Date().getFullYear()}}</span>
             <v-spacer></v-spacer>
-            <v-btn flat to="">Privacy Policy</v-btn>
+            <!-- <v-btn class="hidden-xs-only" flat to="">Privacy Policy</v-btn> -->
           </v-footer>
         </v-flex>
       </v-layout>
     </v-container>
-
   </v-app>
 </template>
 
@@ -77,13 +79,15 @@ export default {
       search: '',
       title: 'JipeRaha ',
       Menuitems: [
-        {id: 1, icon: 'group_add', name: 'Career', to: '/career'},
-        {id: 3, icon: 'work', name: 'Escorts', to: '/executive'},
-        {id: 4, icon: 'help', name: 'About', to: '/about'}
+        {name: 'Home', to: '/', icon: 'home'},
+        {name: 'Contact', to: '/contact', icon: 'phone'}
+        // {id: 1, icon: 'group_add', name: 'Career', to: '/career'},
+        // {id: 3, icon: 'work', name: 'Escorts', to: '/executive'},
+        // {id: 4, icon: 'help', name: 'About', to: '/about'}
       ],
       bottomNavigation: [
         {name: 'Home', to: '/', icon: 'home'},
-        {name: 'Executive', to: '/executive', icon: 'work'},
+        // {name: 'Executive', to: '/executive', icon: 'work'},
         {name: 'About', to: '/about', icon: 'help'}
       ],
       botnav: 'Home'
@@ -100,14 +104,14 @@ export default {
   },
   computed: {
     loading () {
-      return this.$store.state.loading
+      return this.$store.state.vixenloading
     },
     visibleRoutes () {
       const route = this.$route.path
-      if (route !== '/executive') {
-        return false
-      } else {
+      if (route === '/executive' || route === '/') {
         return true
+      } else {
+        return false
       }
     }
   },
@@ -115,7 +119,6 @@ export default {
     window.localStorage.removeItem('vuex')
     // do something after creating vue instance
     this.$store.dispatch('setImages')
-    this.$store.dispatch('setConsent')
     setTimeout(this.deleteStore, 120000)
   },
   watch: {
@@ -149,3 +152,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.main {
+  background-image: url('/static/img/logo.png');
+  background-repeat: repeat;
+  background-position: center;
+}
+</style>

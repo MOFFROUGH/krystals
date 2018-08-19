@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/home/home'
-import Career from '@/components/home/career'
+// import Home from '@/components/home/home'
+// import Career from '@/components/home/career'
 import About from '@/components/home/about'
+import Contact from '@/components/home/contact'
 import Executive from '@/components/krystals/executive'
 import Party from '@/components/krystals/party'
 import oneExecutive from '@/components/krystals/oneExecutive'
@@ -18,16 +19,16 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/career',
-      name: 'Career',
-      component: Career
-    },
+    // {
+    //   path: '/',
+    //   name: 'Home',
+    //   component: Home
+    // },
+    // {
+    //   path: '/career',
+    //   name: 'Career',
+    //   component: Career
+    // },
     // {
     //   path: '/escorts',
     //   name: 'Escorts',
@@ -45,17 +46,22 @@ export default new Router({
       component: About
     },
     {
-      path: '/executive',
+      path: '/contact',
+      name: 'Contact',
+      component: Contact
+    },
+    {
+      path: '/',
       name: 'Executive',
       component: Executive
     },
     {
-      path: '/executive/partybooking',
+      path: '/escort/partybooking',
       name: 'partybooking',
       component: PartyBooking
     },
     {
-      path: '/executive/party/:id',
+      path: '/escort/party/:id',
       name: 'party',
       component: Party,
       props: true

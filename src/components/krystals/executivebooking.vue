@@ -1,75 +1,70 @@
 <template>
   <div id="">
-    <v-layout>
-      <v-flex>
-        <v-container>
-          <v-layout row wrap>
+    <v-layout row wrap>
+      <v-flex sm6 order-xs2 order-sm1>
+        <v-card flat tile style="border: grey solid 1px; border-radius:5px;" height="100%"  color="grey lighten-2" class="title black--text">
+          <h3>Escort details</h3>
+          <v-card-actions class="pa-3">
+            Name
+            <v-spacer></v-spacer>
+            {{image.vixen}}
+          </v-card-actions>
+          <v-card-actions class="pa-3">
+            Location
+            <v-spacer></v-spacer>
+            {{image.location}}
+          </v-card-actions>
+          <v-card-actions class="pa-3">
+            Services
+            <v-spacer></v-spacer>
+            {{image.vixen}}
+          </v-card-actions>
+          <v-card-actions class="pa-3">
+            Type
+            <v-spacer></v-spacer>
+            {{image.type}}
+          </v-card-actions>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm6 order-xs1 order-sm2>
+        <v-card>
+          <v-card-media  :src="src"  height="200px"  class="mb-4" >
+          </v-card-media>
+          <v-card-text class="title text-xs-center">
+            <p>
+              You have chosen  <span class="orange--text">{{image.vixen}}</span> as a service for:
+            </p>
+            <p>
+              1 <span class="headline">{{offer.duration }}</span>
+            </p>
+          </v-card-text>
+          <v-card-actions>
             <v-flex xs12>
-              <v-card-media  :src="src"  height="400px"  class="mb-4" >
-              </v-card-media>
-            </v-flex>
-            <!-- <v-flex sm4 xs12>
-              <span class="headline red--text">
-                {{image.vixen}}
-              </span>
-              <br />
-              I Love:
-              <span class="small blue--text">
-                {{image.interests}}
-              </span>
-              <v-card-media  :src="src"  height="400px"  class="mb-4">
-              </v-card-media>
-            </v-flex> -->
-            <v-flex sm5 offset-sm2 xs12>
-              <!-- <h2>I am available for the following days</h2> -->
-              <!-- <div>
-                <v-alert :color="color" class=" hidden-xs-only"icon="info" dismissible v-model="alert">
-                  {{message}}
-                </v-alert>
-              </div>
-              <v-date-picker color="green lighten-1" header-color="primary" v-model="date"></v-date-picker> -->
+              <v-btn  :disabled="dialog"   class="white--text"  color="green darken-2" @click.stop="dialog = true"    block round  >
+                Proceed
+              </v-btn>
               <v-layout row justify-center>
-                <v-dialog v-model="dialog" persistent max-width="500px">
-                  <v-btn color="success" dark slot="activator">Proceed</v-btn>
+                <v-dialog v-model="dialog" persistent width="500px">
                   <v-card>
                     <v-card-title>
-                      <span class="headline">Personal details</span>
+                      <span class="headline">Contact Details</span>
                     </v-card-title>
                     <v-card-text>
-                      <v-container grid-list-md>
-                        <v-layout wrap>
-                          <v-flex xs12 sm6 md6>
-                            <v-text-field label="Legal first name" required v-model="personal.firstname"></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 sm6 md6>
-                            <v-text-field label="Legal last name" required v-model="personal.lastname"></v-text-field>
-                          </v-flex>
-                          <v-text-field  label="E-mail"  v-model="email" :error-messages="emailErrors" @input="$v.email.$touch()"  @blur="$v.email.$touch()"  required>
-                          </v-text-field>
-                          <v-flex xs12 sm6 md6>
-                            <v-text-field label="Phone number" required v-model="personal.phone"></v-text-field>
-                          </v-flex>
-                          <!-- <v-flex xs12 sm6 md6>
-                            <v-text-field label="Email" required v-model="personal.email"></v-text-field>
-                          </v-flex> -->
-                          <v-flex xs12 sm6>
-                            <v-select  label="Age"  required  :items="['18-29', '30-54', '54+']"  v-model="personal.age"></v-select>
-                          </v-flex>
-                          <!-- <v-flex xs12 sm6 md6>
-                            <v-radio-group v-model="contmode">
-                              <v-radio label="Contact me via email" value="email"></v-radio>
-                              <v-radio label="Contact me via mobile" value="phone"></v-radio>
-                            </v-radio-group>
-                          </v-flex> -->
-                          <!-- <v-flex xs12 v-if="contmode ==='email'">
-                            <v-text-field type="email" label="Email" required v-model="personal.email"></v-text-field>
-                          </v-flex>
-                          <v-flex xs12 v-if="contmode ==='phone'">
-                            <v-text-field  label="Phone" required v-model="personal.phone"></v-text-field>
-                          </v-flex> -->
-
-                        </v-layout>
-                      </v-container>
+                      <v-layout wrap>
+                        <v-flex xs12>
+                          <v-form ref="form">
+                            <v-text-field  label="User Name"  v-model="username" :error-messages="nameErrors" @input="$v.username.$touch()"  @blur="$v.username.$touch()"  required/>
+                            <v-text-field  label="Phone number"  v-model="phone" :error-messages="phoneErrors" @input="$v.phone.$touch()"  @blur="$v.phone.$touch()"  required/>
+                          </v-form>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" flat @click.native="dialog = false">Change</v-btn>
+                            <v-btn color="blue darken-1" flat :loading="loading"      :disabled="loading" @click.native="Book">Proceed</v-btn>
+                          </v-card-actions>
+                        </v-flex>
+                      </v-layout>
+                      <small class="red--text" v-if="error">{{error}}</small>
+                      <br />
                       <small>
                         *indicates required field
                       </small>
@@ -79,11 +74,7 @@
                         on our databases. These are for contact and hook up only.
                       </small>
                     </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" flat @click.native="dialog = false">Change</v-btn>
-                      <v-btn color="blue darken-1" flat @click.native="Book">Proceed</v-btn>
-                    </v-card-actions>
+
                   </v-card>
                 </v-dialog>
               </v-layout>
@@ -92,28 +83,28 @@
                 <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
               </v-snackbar>
             </v-flex>
-          </v-layout>
-        </v-container>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
   </div>
 </template>
 <script>
+import api from '@/services/api'
 import { validationMixin } from 'vuelidate'
-import { required, maxLength, email, between } from 'vuelidate/lib/validators'
+import { required } from 'vuelidate/lib/validators'
 export default {
   props: ['vixenid', 'serviceid'],
   mixins: [validationMixin],
   validations: {
-    name: { required, maxLength: maxLength(25) },
-    age: { required, between: between(20, 1000) },
-    email: { required, email },
-    select: { required },
-    checkbox: { required }
+    username: { required },
+    phone: { required }
   },
   data: () => ({
     date: null,
     email: '',
+    username: '',
+    phone: '',
     message: null,
     snackbar: false,
     color: 'red',
@@ -121,27 +112,41 @@ export default {
     alert: false,
     dialog: false,
     contmode: 'phone',
-    personal: {
-      email: '',
-      firstname: '',
-      lastname: '',
-      age: '',
-      phone: ''
-    }
+    loading: false,
+    error: null
   }),
   methods: {
     Book () {
       console.log(this.personal)
-      this.$router.push({
-        name: 'Paypal',
-        params: {
-          vixenid: this.vixenid,
-          serviceid: this.serviceid,
-          user: this.personal,
-          startdate: this.date,
-          offertype: 'exec'
-        }
-      })
+      this.$v.$touch()
+      if (!this.$v.$error) {
+        this.loading = true
+        api.post('bookcontacts', {
+          name: this.username,
+          phone: this.phone
+        })
+        .then(response => {
+          this.loading = false
+          this.$router.push({
+            name: 'Paypal',
+            params: {
+              vixenid: this.vixenid,
+              serviceid: this.serviceid,
+              user: this.personal,
+              startdate: this.date,
+              offertype: 'exec'
+            }
+          })
+        })
+        .catch(error => {
+          this.loading = false
+          this.error = 'Something wrong happened, this resposne was not processed'
+          console.log(error)
+        })
+      }
+    },
+    clear () {
+      this.$refs.form.reset()
     }
   },
   computed: {
@@ -154,11 +159,16 @@ export default {
     offer () {
       return this.$store.getters.getExecService(this.serviceid)
     },
-    emailErrors () {
+    nameErrors () {
       const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.email && errors.push('Must be valid e-mail')
-      !this.$v.email.required && errors.push('E-mail is required')
+      if (!this.$v.username.$dirty) return errors
+      !this.$v.username.required && errors.push('Username is required')
+      return errors
+    },
+    phoneErrors () {
+      const errors = []
+      if (!this.$v.phone.$dirty) return errors
+      !this.$v.phone.required && errors.push('Phone number is required')
       return errors
     }
   },

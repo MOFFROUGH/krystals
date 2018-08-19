@@ -20,22 +20,15 @@ export const store = new Vuex.Store({
       {to: '/', id: 1, src: '/static/img/download.jpg', icon: 'home', title: 'Home'},
       {to: '/executive', id: 3, src: '/static/img/images1.jpg', icon: 'work', title: 'Escorts'}
     ],
-    images: [
-      // {vixen: 'cate', email: 'cate@cate.com', location: 'manhattan', type: 'blonde', src: '/static/img/images-n3.jpg', age: 23, inParty: false, id: 12},
-      // {vixen: 'Angela', email: 'cate@cate.com', location: 'Bronx', type: 'Asian', src: '/static/img/images-n4.jpg', age: 23, inParty: false, id: 13},
-      // {vixen: 'Maggie', email: 'cate@cate.com', location: 'Bronx', type: 'Brunette', src: '/static/img/images-n5.jpg', age: 23, inParty: false, id: 14},
-      // {vixen: 'Ann', email: 'cate@cate.com', location: 'Bronx', type: 'Ebony', src: '/static/img/images-n6.jpg', age: 23, inParty: false, id: 15},
-      // {vixen: 'Janet', email: 'cate@cate.com', location: 'manhattan', type: 'Blonde', src: '/static/img/images-n7.jpg', age: 23, inParty: false, id: 16},
-      // {vixen: 'Jade', email: 'cate@cate.com', location: 'Bronx', type: 'blonde', src: '/static/img/images-n8.jpg', age: 23, inParty: false, id: 17}
-    ],
+    images: [],
     partyVixens: [],
     loading: false,
     vixenloading: false,
-    consent: false,
+    consent: true,
     officialservices: [
-      {payment: '2000', duration: 'nights', id: 1, icon: 'star', budget: 'Ksh. 2000', timefor: '/1 night gfe '},
-      {payment: '7000', duration: 'weekends', id: 2, icon: 'star', budget: 'Ksh. 7000', timefor: '/1 weekend gfe'},
-      {payment: '10000', duration: 'weeks', id: 3, icon: 'star', budget: 'Ksh. 10000', timefor: '/1 week gfe'}
+      {payment: '2000', duration: 'night', id: 1, icon: 'star', budget: 'Ksh. 2000', timefor: '/1 night gfe '},
+      {payment: '7000', duration: 'weekend', id: 2, icon: 'star', budget: 'Ksh. 7000', timefor: '/1 weekend gfe'},
+      {payment: '10000', duration: 'week', id: 3, icon: 'star', budget: 'Ksh. 10000', timefor: '/1 week gfe'}
       // {payment: '3000', duration: 'days', id: 4, icon: 'star', budget: 'Ksh. 3000', timefor: '/ day for business trip gfe'}
     ],
     casualservices: [
@@ -96,7 +89,7 @@ export const store = new Vuex.Store({
         const obj = res.data.images
         for (var i = 0; i < obj.length; i++) {
           let Allimages = {
-            id: obj[i].id,
+            id: parseInt(obj[i].id),
             src: obj[i].src,
             vixen: obj[i].name,
             location: obj[i].location,
@@ -105,9 +98,11 @@ export const store = new Vuex.Store({
             icon: 'gem',
             color: 'blue',
             interests: 'clubbing and going out',
-            age: parseInt(obj[i].age)
+            age: parseInt(obj[i].age),
+            imageShow: false
           }
           commit('setImages', Allimages)
+          // console.log(Allimages)
         }
         console.log(obj)
 
@@ -141,27 +136,12 @@ export const store = new Vuex.Store({
       }
     },
     setOneVixenImages ({commit, state}, id) {
-      commit('setVixenLoading', true)
-      // console.log('clicked')
-      api.get('images/' + id)
-      .then(res => {
-        const Allimages = []
-        const obj = res.data.images
-        for (var i = 0; i < obj.length; i++) {
-          Allimages.push({
-            id: obj[i].id,
-            src: obj[i].imageURL,
-            icon: 'star'
-          })
-        }
-        // this.imagesVixen = Allimages
-        // console.log(Allimages)
-        commit('setOneVixenImages', Allimages)
-        commit('setVixenLoading', false)
-      }).catch(error => {
-        console.log(error)
-        commit('setVixenLoading', false)
+      state.loading = true
+      var vixen = state.images.find(function (obj) {
+        return obj.id === parseInt(id)
       })
+      commit('setOneVixenImages', vixen)
+      state.loading = false
     }
   },
   getters: {
@@ -186,6 +166,18 @@ export const store = new Vuex.Store({
       })
       state.loading = false
       return vixen
+    },
+    showImage: (state) => (id) => {
+      var vixen = state.images.find(function (obj) {
+        return obj.id === parseInt(id)
+      })
+      vixen.imageShow = true
+    },
+    hideImage: (state) => (id) => {
+      var vixen = state.images.find(function (obj) {
+        return obj.id === parseInt(id)
+      })
+      vixen.imageShow = false
     },
     getOfficialServices: (state) => {
       return state.officialservices
