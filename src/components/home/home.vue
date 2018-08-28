@@ -29,8 +29,31 @@
       </v-layout>
       <v-layout row wrap class="mt-2" v-if="loading">
         <v-flex xs12 class="text-xs-center">
-          <v-progress-circular  indeterminate  :width="4"  :size="160"  fill="blue"  color="red">
+          <v-progress-circular  indeterminate  :width="4"  :size="20"  fill="blue"  color="red">
           </v-progress-circular>
+          <v-jumbotron>
+            <v-container fill-height>
+              <v-layout align-center>
+                <v-flex>
+                  <h3 class="display-3">Welcome to the Nairobi Escorts</h3>
+
+                  <span class="subheading">The all in  one professional stop for all your escort needs</span>
+
+                  <v-divider class="my-3"></v-divider>
+
+                  <div class="title mb-3">Check out our newest features!</div>
+
+                  <v-btn
+                  class="mx-0"
+                  color="primary"
+                  large
+                  >
+                  See more
+                </v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-jumbotron>
           <p>
             Please wait as we fetch some data from the servers
           </p>

@@ -1,5 +1,4 @@
 <template>
-  <div id="">
     <v-layout row wrap>
       <v-flex sm6 order-xs2 order-sm1>
         <v-card flat tile style="border: grey solid 1px; border-radius:5px;" height="100%"  color="grey lighten-2" class="title black--text">
@@ -9,21 +8,25 @@
             <v-spacer></v-spacer>
             {{image.vixen}}
           </v-card-actions>
+          <hr />
           <v-card-actions class="pa-3">
             Location
             <v-spacer></v-spacer>
             {{image.location}}
           </v-card-actions>
-          <v-card-actions class="pa-3">
-            Services
+          <hr />
+          <v-card-actions class="">
+            Services:
             <v-spacer></v-spacer>
-            {{image.vixen}}
+            <v-layout row wrap class="text-xs-right">
+              <v-flex xs12>OutCall</v-flex><br />
+              <v-flex xs12>Incall</v-flex><br />
+              <v-flex xs12>Parties</v-flex><br />
+              <v-flex xs12>Executive Escort</v-flex><br />
+            </v-layout>
           </v-card-actions>
-          <v-card-actions class="pa-3">
-            Type
-            <v-spacer></v-spacer>
-            {{image.type}}
-          </v-card-actions>
+          <hr />
+        </v-card>
         </v-card>
       </v-flex>
       <v-flex xs12 sm6 order-xs1 order-sm2>
@@ -35,12 +38,12 @@
               You have chosen  <span class="orange--text">{{image.vixen}}</span> as a service for:
             </p>
             <p>
-              1 <span class="headline">{{offer.duration }}</span>
+              {{offer.time }} <span class="headline">{{offer.duration }}</span>
             </p>
           </v-card-text>
           <v-card-actions>
             <v-flex xs12>
-              <v-btn  :disabled="dialog"   class="white--text"  color="green darken-2" @click.stop="dialog = true"    block round  >
+              <v-btn  :disabled="dialog"   class="white--text"  color="green darken-2" @click.stop="dialog = true"    block  >
                 Proceed
               </v-btn>
               <v-layout row justify-center>
@@ -69,10 +72,10 @@
                         *indicates required field
                       </small>
                       <br />
-                      <small>Note: We do not
+                      <!-- <small>Note: We do not
                         <strong>save your information</strong>
                         on our databases. These are for contact and hook up only.
-                      </small>
+                      </small> -->
                     </v-card-text>
 
                   </v-card>
@@ -87,13 +90,18 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </div>
 </template>
 <script>
 import api from '@/services/api'
 import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 export default {
+  metaInfo: {
+    title: 'Escort Booking',
+    meta: [
+      { vmid: 'description', name: 'description', content: 'Welcome to JipeRaha executive Nairobi escorts. We offer highly proffessional escorts for party and companionship' }
+    ]
+  },
   props: ['vixenid', 'serviceid'],
   mixins: [validationMixin],
   validations: {
@@ -121,9 +129,11 @@ export default {
       this.$v.$touch()
       if (!this.$v.$error) {
         this.loading = true
-        api.post('bookcontacts', {
+        api.post('userdetails', {
           name: this.username,
-          phone: this.phone
+          phone: this.phone,
+          escort: this.vixenid,
+          service: this.serviceid
         })
         .then(response => {
           this.loading = false

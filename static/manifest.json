@@ -1,6 +1,6 @@
 {
-  "name": "nyKrystals",
-  "short_name": "nyk",
+  "name": "JipeRaha",
+  "short_name": "jraha",
   "icons": [
     {
       "src": "/static/img/icons/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#EA80FC",
   "theme_color": "#AB47BC"

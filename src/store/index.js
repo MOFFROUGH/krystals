@@ -5,7 +5,7 @@ Vue.use(Vuex)
 import api from './../services/api'
 
 const vuexLocalStorage = new VuexPersist({
-  key: 'vuex', // The key to store the state on in the storage provider.
+  key: 'escorts', // The key to store the state on in the storage provider.
   storage: window.localStorage // or window.sessionStorage or localForage
   // Function that passes the state and returns the state with only the objects you want to store.
   // reducer: state => state,
@@ -25,17 +25,7 @@ export const store = new Vuex.Store({
     loading: false,
     vixenloading: false,
     consent: true,
-    officialservices: [
-      {payment: '2000', duration: 'night', id: 1, icon: 'star', budget: 'Ksh. 2000', timefor: '/1 night gfe '},
-      {payment: '7000', duration: 'weekend', id: 2, icon: 'star', budget: 'Ksh. 7000', timefor: '/1 weekend gfe'},
-      {payment: '10000', duration: 'week', id: 3, icon: 'star', budget: 'Ksh. 10000', timefor: '/1 week gfe'}
-      // {payment: '3000', duration: 'days', id: 4, icon: 'star', budget: 'Ksh. 3000', timefor: '/ day for business trip gfe'}
-    ],
-    casualservices: [
-      {payment: '200', duration: 'hour', id: 1, icon: 'star', budget: 'Ksh. 200', timefor: '/1 hour '},
-      {payment: '350', duration: 'hours', id: 2, icon: 'star', budget: 'Ksh. 350', timefor: '/2 hours '},
-      {payment: '1000', duration: 'night', id: 3, icon: 'star', budget: 'Ksh. 1000', timefor: '/1 night '}
-    ],
+    officialservices: [],
     OneVixenImages: null
   },
   mutations: {
@@ -45,7 +35,7 @@ export const store = new Vuex.Store({
         return el.vixen === payload.vixen
       })
       if (!found) {
-        state.images.push(payload)
+        state.images = payload
       }
     },
     setPartyVixens (state, payload) {
@@ -53,6 +43,9 @@ export const store = new Vuex.Store({
     },
     setOneVixenImages (state, payload) {
       state.OneVixenImages = payload
+    },
+    setExecutiveServices (state, payload) {
+      state.officialservices = payload
     },
     setLoading (state, payload) {
       state.vixenloading = payload
@@ -87,6 +80,7 @@ export const store = new Vuex.Store({
       .then(res => {
         // const Allimages = {}
         const obj = res.data.images
+        let images = []
         for (var i = 0; i < obj.length; i++) {
           let Allimages = {
             id: parseInt(obj[i].id),
@@ -97,14 +91,16 @@ export const store = new Vuex.Store({
             class: 'diamond',
             icon: 'gem',
             color: 'blue',
-            interests: 'clubbing and going out',
+            inParty: false,
+            interests: obj[i].description,
             age: parseInt(obj[i].age),
             imageShow: false
           }
-          commit('setImages', Allimages)
+          images.push(Allimages)
           // console.log(Allimages)
         }
-        console.log(obj)
+        commit('setImages', images)
+        // console.log(obj)
 
         commit('setLoading', false)
         // console.log(res.data)
@@ -135,12 +131,29 @@ export const store = new Vuex.Store({
         commit('setConsent', true)
       }
     },
+    setOneVixenImagesNull ({commit}) {
+      commit('setOneVixenImages', null)
+    },
     setOneVixenImages ({commit, state}, id) {
       state.loading = true
-      var vixen = state.images.find(function (obj) {
-        return obj.id === parseInt(id)
+      api.get('images/' + id)
+      .then(res => {
+        commit('setOneVixenImages', res.data.images)
       })
-      commit('setOneVixenImages', vixen)
+      .catch(error => {
+        console.log(error)
+      })
+      state.loading = false
+    },
+    setExecutiveServices ({commit, state}, id) {
+      state.loading = true
+      api.get('services')
+      .then(res => {
+        commit('setExecutiveServices', res.data.services)
+      })
+      .catch(error => {
+        console.log(error)
+      })
       state.loading = false
     }
   },

@@ -6,6 +6,29 @@
           <v-card-title primary-title class="layout justify-center">
             <div class="headline">Contact us</div>
           </v-card-title>
+          <div class="white elevation-2 mt-2">
+            <v-toolbar flat dense class="light-green accent-2" light>
+              <v-spacer></v-spacer>
+              <v-toolbar-title>
+                  <v-spacer></v-spacer>
+                We are Hiring!!!
+                  <v-spacer></v-spacer>
+              </v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+
+            <div class="headline font-weight-medium font-italic text-xs-center ma-2">
+              <p>
+                We are looking for new sophisticated escorts working in or around Nairobi.
+              </p>
+              <p>
+                Our clientelle is strict and high-end, so we need discrete and professional escorts.
+              </p>
+              <p>
+                For futher information and queries contact us via email: <span>careers@jiperaha.com</span>
+              </p>
+            </div>
+          </div>
           <v-layout row wrap>
             <v-flex xs12 sm6 class="grey lighten-2">
               <div class="ml-1 mr-1">
@@ -41,7 +64,7 @@
               </div>
             </v-flex>
             <v-flex xs12 sm6 class="grey lighten-2">
-              <div class="ml-1 mr-1">
+              <div class="ml-1 mr-1 mb-2">
                 <v-card-text>
                   Or send us a message:
                 </v-card-text>
@@ -61,19 +84,27 @@
                       label="E-mail"
                       required
                       ></v-text-field>
-                      <v-text-field
+                      <v-textarea
                       v-model="comments"
                       :rules="commentRules"
                       label="Message"
                       required
-                      ></v-text-field>
-                      <v-btn
-                      :disabled="!valid"
-                      @click="submit"
-                      >
-                      submit
-                    </v-btn>
-                    <v-btn @click="clear">clear</v-btn>
+                      ></v-textarea>
+                      <v-layout row wrap>
+                        <v-flex xs6>
+                          <v-btn @click="clear" round outline class="mr-2 red">clear</v-btn>
+                        </v-flex>
+                        <v-flex xs6>
+                          <v-btn
+                          round
+                          :disabled="!valid"
+                          @click="submit"
+                          class="green"
+                          >
+                          submit
+                        </v-btn>
+                        </v-flex>
+                      </v-layout>
                   </v-flex>
                 </v-layout>
               </v-form>
@@ -99,6 +130,12 @@
 <script>
 import api from '@/services/api'
 export default {
+  metaInfo: {
+    title: 'Contact Us',
+    meta: [
+      { vmid: 'description', name: 'description', content: 'Get in tpuch with jiperaha for amazing offers on all types of escorts within and without nairobi' }
+    ]
+  },
   data: () => ({
     valid: true,
     name: '',
@@ -124,8 +161,9 @@ export default {
         api.post('comments', {
           name: this.name,
           email: this.email,
-          comment: this.comment
+          comment: this.comments
         })
+        this.$router.push('/')
       }
     },
     clear () {

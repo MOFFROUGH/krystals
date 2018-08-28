@@ -1,100 +1,158 @@
 <template>
-  <div class="container-fluid">
-    <v-layout row wrap>
-      <v-flex xs12>
-        <v-card class="purple lighten-2 ma-2 xs12">
-
-          <v-layout row wrap>
-            <v-flex xs12>
-              <div class="headline">
-                Book For party:
-              </div>
-            </v-flex>
-            <v-flex xs12>
-              <v-card-actions class="body-1 mt-2">
-                <v-btn  round small color="orange" @click="roter">Add more Girls</v-btn>
+  <v-layout row wrap>
+    <v-flex xs12>
+      <v-card class="purple lighten-2 ma-2 xs12">
+        <v-layout row wrap>
+          <v-flex xs12>
+            <div class="headline">
+              Book For party:
+            </div>
+          </v-flex>
+          <v-flex xs12>
+            <v-card-actions class="body-1 mt-2">
+              <v-btn  color="orange" class="mr-2" @click.native="roter">Add more Girls</v-btn>
+              <v-btn  :disabled="dialog"   class="white--text"  color="green darken-2" @click.stop="dialog = true"  >
+                Get party Rocking
+              </v-btn>
+              <v-layout row justify-center>
                 <v-dialog v-model="dialog" persistent width="500px">
-
-                  <v-btn  round block color="success" dark slot="activator">Finish</v-btn>
-
                   <v-card>
                     <v-card-title>
-                      <span class="display-1">Payment Procedure</span>
+                      <span class="headline">Contact Details</span>
                     </v-card-title>
                     <v-card-text>
-                      <h1>Paybill Number: 887667</h1>
-                      <div>
-                        Steps to follow:
-                        <div>
-                          1. Go to mpesa, lipa na mpesa, Paybill
-                          <br />
-                          2. Enter the business number 887667
-                          <br />
-                          3. Enter account number as your name
-                          <br />
-                          4. Enter amount Ksh. {{parseInt(this.$store.getters.getPartyVixens.length) * 800}} /=.
-                          <br />
-                          5. Complete Transaction
-                        </div>
-                        <div>
-                          <v-form>
-                            <v-text-field  label="Enter Mpesa Confirmation Code "  v-model="mpesa"  type ="text"  required></v-text-field>
+                      <v-layout wrap>
+                        <v-flex xs12>
+                          <v-form ref="form">
+                            <v-text-field  label="User Name"  v-model="name" :error-messages="nameErrors" @input="$v.name.$touch()"  @blur="$v.name.$touch()"  required/>
+                            <v-text-field  label="Phone number"  v-model="phone" :error-messages="phoneErrors" @input="$v.phone.$touch()"  @blur="$v.phone.$touch()"  required/>
                           </v-form>
-                        </div>
-                      </div>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-                      <v-btn color="blue darken-1" flat @click.native="Book">All Good</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-                <!-- <v-btn round block color="info" class="mx-auto" @click="dialog=!dialog">Checkout</v-btn> -->
-              </v-card-actions>
-              <v-card-text light class="small mt-2">
-                <v-list class="purple lighten-3 pa-2">
-                  <v-list-tile avatar v-for="item in partyVixens" :key="item.id"  class="accent elevation-1 ma-2 pt-1 pb-1">
-                      <v-layout>
-                        <v-flex xs3 >
-                          <img style="cursor:pointer; color: red" class="image" height="50px" :src="item.src" @click="showImage(item.id)" >
-                          <v-dialog v-model="item.imageShow">
-                            <img class="image"  :src="item.src" height="500px">
-                            <v-btn@click="close(item.id)">Close</v-btn>
-                          </v-dialog>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue darken-1" flat @click.native="dialog = false">Change</v-btn>
+                            <v-btn color="blue darken-1" flat :loading="loading"      :disabled="loading" @click.native="Book">Proceed</v-btn>
+                          </v-card-actions>
                         </v-flex>
                       </v-layout>
-                    <v-list-tile-title>
-                      {{item.vixen }}
-                    </v-list-tile-title>
-                    <v-list-tile-title>
-                      <v-icon style="cursor:pointer; color: red" @click="removeFromParty(item.id)">clear</v-icon>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-card-text>
-            </v-flex>
-            <v-flex xs12 sm6 offset-sm3>
-              <v-card-actions class="body-1 mt-2">
-                <!-- <v-btn round color="error" class="mx-auto" @click="dialog=!dialog">Close</v-btn> -->
-              </v-card-actions>
-            </v-flex>
-          </v-layout>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </div>
+                      <small class="red--text" v-if="error">{{error}}</small>
+                      <br />
+                      <small>
+                        *indicates required field
+                      </small>
+                      <br />
+                    </v-card-text>
+
+                  </v-card>
+                </v-dialog>
+              </v-layout>
+              <!-- <v-dialog v-model="dialog2" persistent width="500px">
+                <v-btn   color="success" dark slot="activator">Finish</v-btn>
+                <v-card>
+                  <v-card-title>
+                    <span class="display-1">Payment Procedure</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <h1>Phone Number: 0706798820</h1>
+                    <div>
+                      Steps to follow:
+                      <div>
+                        1. Go to mpesa, send money
+                        <br />
+                        2. Enter the phone number 0706798820
+                        <br />
+                        3. Enter amount as  Ksh. {{parseInt(this.$store.getters.getPartyVixens.length) * 2000}} /=.
+                        <br />
+                        4. Enter your pin.
+                        <br />
+                        5. Complete Transaction
+                      </div>
+                  </div>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+                  <v-btn color="blue darken-1" flat @click.native="Book">All Good</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog> -->
+
+          </v-card-actions>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs12 sm8 offset-sm2>
+                <v-card light class="small mt-2" v-for="item in partyVixens" :key="item.id">
+                  <v-card-media :src="item.src" height="200px"></v-card-media>
+                  <v-card-text class="text-xs-center title">{{item.vixen }}</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn round  class="text-xs-center"color="red">Remove from party</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+            </v-card>
+              </v-flex>
+            </v-layout>
+
+          </v-card-text>
+        </v-flex>
+
+      </v-layout>
+    </v-card>
+  </v-flex>
+</v-layout>
 </template>
 <script>
+import api from '@/services/api'
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 export default {
+  metaInfo: {
+    title: 'Escort Booking',
+    meta: [
+      { vmid: 'description', name: 'description', content: 'Welcome to JipeRaha executive Nairobi escorts. We offer highly proffessional escorts for party and companionship' }
+    ]
+  },
+  mixins: [validationMixin],
+  validations: {
+    name: { required },
+    phone: { required }
+  },
   data: () => ({
     //
-    dialog: false
+    dialog: false,
+    dialog2: false,
+    loading: false,
+    name: '',
+    phone: '',
+    escorts: []
   }),
   methods: {
     //
+    getPartyVixensId () {
+      for (var i = 0; i < this.partyVixens.length; i++) {
+        this.escorts[i] = this.partyVixens[i].id
+      }
+    },
+    Book () {
+      this.$v.$touch()
+      if (!this.$v.$error) {
+        this.loading = true
+        api.post('party/userdetails', {
+          name: this.name,
+          phone: this.phone,
+          escorts: this.escorts
+        })
+        .then(response => {
+          this.loading = false
+        })
+        .catch(error => {
+          this.loading = false
+          this.error = 'Something wrong happened, this resposne was not processed'
+          console.log(error)
+        })
+      }
+    },
     roter () {
-      this.$router.push('/executive/party/4')
+      this.$router.push('/escort/party/1')
     },
     removeFromParty (id) {
       console.log('Remove from cart ' + id)
@@ -109,7 +167,22 @@ export default {
   computed: {
     partyVixens () {
       return this.$store.getters.getPartyVixens
+    },
+    nameErrors () {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.required && errors.push('Name is required')
+      return errors
+    },
+    phoneErrors () {
+      const errors = []
+      if (!this.$v.phone.$dirty) return errors
+      !this.$v.phone.required && errors.push('Phone number is required')
+      return errors
     }
+  },
+  created () {
+    this.getPartyVixensId()
   }
 
 }
